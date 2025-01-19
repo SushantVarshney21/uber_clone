@@ -16,18 +16,20 @@ const UserProtectWrapper = ({children}) => {
       if (!token) {
         navigate('/login')
     }
-    },[])
+    },[token])
 
-    axios.get(`${import.meta.env.VITE_BASE_URL}/users/profile`,{
-      headers: { Authorization: `Bearer ${token}` }
-    }).then((response) => {
-        setUser(response.data.user)
-        setLoading(false)
-    }).catch((error) => {
-        localStorage.removeItem('token')
-        navigate('/login')
-        console.log(error)
-    })
+    useEffect(()=>{
+      axios.get(`${import.meta.env.VITE_BASE_URL}/users/profile`,{
+        headers: { Authorization: `Bearer ${token}` }
+      }).then((response) => {
+          setUser(response.data)
+          setLoading(false)
+      }).catch((error) => {
+          localStorage.removeItem('token')
+          navigate('/login')
+          console.log(error)
+      })
+    },[token])
 
     if(loading) {
         return <div>Loading...</div>

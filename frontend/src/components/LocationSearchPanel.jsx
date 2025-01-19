@@ -1,27 +1,33 @@
+const LocationSearchPanel = ({ suggestions, setVehiclePanel, setPanelOpen, setPickup, setDestination, activeField }) => {
+    const handleSuggestionClick = (suggestion) => {
+        const selectedDescription = suggestion.description; // Extract the description
+        if (activeField === 'pickup') {
+            setPickup(selectedDescription);
+        } else if (activeField === 'destination') {
+            setDestination(selectedDescription);
+        }
+    };
 
-const LocationSearchPanel = (props) => {
-    const locations = [
-        'Flat No. 401, Shanti Niketan Apartments, Linking Road, Bandra West,Mumbai, Maharashtra - 400050.',
-        'No. 12, 2nd Floor, Green View Complex, Whitefield Main Road, Bangalore, Karnataka - 560066.',
-        '45, Park Street, Near St. Xavier’s College, Kolkata, West Bengal - 700016.',
-        'C-25, Ground Floor, Connaught Place, New Delhi - 110001.'
-    ]
-  return (
-    <div>
-        {/* this is the sample dats */}
-        {
-            locations.map((location, index) => (
-                <div onClick={()=>{
-                    props.setVehiclePanel(true)
-                    props.setOpenPanel(false)
-                }} key={index} className="flex justify-start items-center gap-4 mt-4 border-2 border-white active:border-black rounded-xl p-2">
-                    <h2 className="bg-gray-200 rounded-full h-12 w-24 flex items-center justify-center"><i className="ri-map-pin-fill text-2xl"></i></h2>
-                    <h4 className="font-semibold">{location}</h4>
+    if (suggestions.length === 0) {
+        return <p className="text-center text-gray-500">No suggestions available.</p>;
+    }
+
+    return (
+        <div>
+            {suggestions.map((suggestion, idx) => (
+                <div
+                    key={suggestion.place_id || idx} // Use place_id if available, else fallback to index
+                    onClick={() => handleSuggestionClick(suggestion)}
+                    className="flex gap-4 border-2 p-3 border-gray-50 active:border-black rounded-xl items-center my-2 justify-start hover:bg-gray-100"
+                >
+                    <h2 className="bg-[#eee] h-8 flex items-center justify-center w-12 rounded-full">
+                        <i className="ri-map-pin-fill"></i>
+                    </h2>
+                    <h4 className="font-medium">{suggestion.description}</h4> {/* Render description */}
                 </div>
-            ))
-        }        
-    </div>
-  )
-}
+            ))}
+        </div>
+    );
+};
 
-export default LocationSearchPanel
+export default LocationSearchPanel;
