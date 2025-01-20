@@ -18,14 +18,12 @@ function initializeSocket(server) {
         socket.on('join', async (data) => {
             const { userId, userType } = data;
             if (!userId) {
-                // console.log(`User ID: ${userId}, User Type: ${userType}`);
                 return socket.emit('error', { message: 'Invalid user ID' });
             }
             if (userType === 'user') {
                 await userModel.findByIdAndUpdate(userId, { socketId: socket.id });
             } else if (userType === 'captain') {
                 await captainModel.findByIdAndUpdate(userId, { socketId: socket.id });
-            // console.log(`User ID: ${userId}, User Type: ${userType}`);
             }
         });
 
@@ -36,7 +34,6 @@ function initializeSocket(server) {
             if (!location || !location.ltd || !location.lng) {
                 return socket.emit('error', { message: 'Invalid location data' });
             }
-            console.log(userId+location)
 
             await captainModel.findByIdAndUpdate(
                 userId,
@@ -58,7 +55,6 @@ function initializeSocket(server) {
 
 const sendMessageToSocketId = (socketId, messageObject) => {
 
-// console.log(messageObject);
 
     if (io) {
         io.to(socketId).emit(messageObject.event, messageObject.data);

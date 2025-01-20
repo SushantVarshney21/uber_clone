@@ -17,6 +17,7 @@ const CaptainHome = () => {
 
   const ridePopUpPanelRef = useRef(null)
   const confirmRidePopUpPanelRef = useRef(null)
+  const [loc, setLoc] = useState(null)
 
   const {captain} = useContext(CaptainDataContext)
   const {socket} = useContext(SocketContext)
@@ -60,10 +61,6 @@ const updateLocation = () => {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-
-        console.log(position.coords.latitude)
-        console.log(position.coords.longitude)
-
         socket.emit('update-location-captain', {
           userId: captain._id,
           location: {
@@ -77,9 +74,6 @@ const updateLocation = () => {
       }
     );
     
-  // console.log(captain.location)
-  // console.log(captain._id)
-    // console.log(captain.location)
   } else {
     console.warn("Geolocation is not supported by this browser.");
   }
