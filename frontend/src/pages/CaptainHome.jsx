@@ -51,30 +51,38 @@ useEffect(() => {
       userId: captain._id,
       userType: 'captain'
   })
-
-
-  const updateLocation = () => {
-      if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(position => {
-
-              socket.emit('update-location-captain', {
-                  userId: captain._id,
-                  location: {
-                      ltd: position.coords.latitude,
-                      lng: position.coords.longitude
-                  }
-              })
-          })
-
-          // console.log(captain.location)
-      }
-  }
-
-  const locationInterval = setInterval(updateLocation, 10000)
-  updateLocation()
-
-  // return () => clearInterval(l2ocationInterval)
 }, [])
+
+
+const updateLocation = () => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        socket.emit('update-location-captain', {
+          userId: captain._id,
+          location: {
+            lat: position.coords.latitude, // Changed "ltd" to "lat" for better convention
+            lng: position.coords.longitude,
+          },
+        });
+      },
+      (error) => {
+        console.error("Error fetching location:", error.message);
+      }
+    );
+    console.log(captain.location)
+  } else {
+    console.warn("Geolocation is not supported by this browser.");
+  }
+};
+
+useEffect(() => {
+  const locationInterval = setInterval(updateLocation, 10000);
+
+  return () => {
+    clearInterval(locationInterval); // Cleanup the interval on unmount
+  };
+}, []);
 
   useGSAP(function(){
     if(ridePopUpPanel){

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
+import { LoadScript, GoogleMap, Marker } from '@react-google-maps/api'
 
 const containerStyle = {
     width: '100%',
@@ -7,76 +8,62 @@ const containerStyle = {
 
 const center = {
     lat: -3.745,
-    lng: -38.523,
+    lng: -38.523
 };
 
 const LiveTracking = () => {
-    const [currentPosition, setCurrentPosition] = useState(center);
+    const [ currentPosition, setCurrentPosition ] = useState(center);
 
     useEffect(() => {
-        if (navigator.geolocation) {
-            const watchId = navigator.geolocation.watchPosition(
-                (position) => {
-                    const { latitude, longitude } = position.coords;
-                    setCurrentPosition({
-                        lat: latitude,
-                        lng: longitude,
-                    });
-                },
-                (error) => {
-                    console.error('Error getting location:', error);
-                },
-                { enableHighAccuracy: true }
-            );
+        navigator.geolocation.getCurrentPosition((position) => {
+            const { latitude, longitude } = position.coords;
+            setCurrentPosition({
+                lat: latitude,
+                lng: longitude
+            });
+        });
 
-            return () => navigator.geolocation.clearWatch(watchId);
-        } else {
-            console.error('Geolocation is not supported by this browser.');
-        }
+        const watchId = navigator.geolocation.watchPosition((position) => {
+            const { latitude, longitude } = position.coords;
+            setCurrentPosition({
+                lat: latitude,
+                lng: longitude
+            });
+        });
+
+        return () => navigator.geolocation.clearWatch(watchId);
     }, []);
 
     useEffect(() => {
         const updatePosition = () => {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const { latitude, longitude } = position.coords;
-                    setCurrentPosition({
-                        lat: latitude,
-                        lng: longitude,
-                    });
-                    console.log('Position updated:', latitude, longitude);
-                },
-                (error) => {
-                    console.error('Error updating position:', error);
-                }
-            );
+            navigator.geolocation.getCurrentPosition((position) => {
+                const { latitude, longitude } = position.coords;
+
+                console.log('Position updated:', latitude, longitude);
+                setCurrentPosition({
+                    lat: latitude,
+                    lng: longitude
+                });
+            });
         };
 
-        const intervalId = setInterval(updatePosition, 1000);
+        updatePosition(); // Initial position update
 
-        return () => clearInterval(intervalId);
+        const intervalId = setInterval(updatePosition, 1000); // Update every 10 seconds
+
     }, []);
 
-    useEffect(() => {
-        // Assuming GoMaps.Pro requires initializing the map
-        const map = new GoMaps.Map({
-            container: 'map', // The ID of your map container div
-            center: currentPosition,
-            zoom: 15,
-        });
+    return (
+        <LoadScript googleMapsApiKey={import.meta.env.VITE_MAPS_API}>
+            <GoogleMap
+                mapContainerStyle={containerStyle}
+                center={currentPosition}
+                zoom={15}
+            >
+                <Marker position={currentPosition} />
+            </GoogleMap>
+        </LoadScript>
+    )
+}
 
-        // Marker setup
-        const marker = new GoMaps.Marker({
-            position: currentPosition,
-            map: map,
-        });
-
-        return () => {
-            map.destroy(); // Clean up the map on component unmount
-        };
-    }, [currentPosition]);
-
-    return <div id="map" style={containerStyle}></div>;
-};
-
-export default LiveTracking;
+export default LiveTracking
