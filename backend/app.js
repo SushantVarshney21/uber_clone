@@ -1,36 +1,35 @@
-const dotenv = require("dotenv");
-dotenv.config();
-const express = require("express");
-const cors = require("cors");
-const app = express();
-const connectToDb = require('./bd/db');
-const cookieParser = require('cookie-parser');
+const dotenv = require("dotenv")
+dotenv.config()
+const express = require("express")
+const cors = require("cors")
+const app = express()
+const connectToDb = require('./bd/db')
+const cookieParser = require('cookie-parser')
 
-const userRoutes = require("./routes/user.routes");
-const captainRoutes = require("./routes/captain.routes");
-const mapRoutes = require('./routes/map.routes");
-const rideRoutes = require('./routes/ride.routes");
+const userRoutes = require("./routes/user.routes")
+const captainRoutes = require("./routes/captain.routes")
+const mapRoutes = require('./routes/map.routes')
+const rideRoutes = require('./routes/ride.routes')
 
-connectToDb();
+connectToDb()
 
-// Configure CORS with allowed origin
 const corsOptions = {
-  origin: "https://vercel.com/sushant-varshneys-projects/uber-clone-frontend", // Add your frontend URL here
-  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
-};
-app.use(cors(corsOptions));
+    origin: "https://uber-clone-backend-three.vercel.app/", // Frontend URL
+    credentials: true, // Allow cookies and headers for authentication
+  };
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+  app.use(cors(corsOptions));
+app.use(express.json())
+app.use(express.urlencoded({extended:true}))
+app.use(cookieParser())
 
-app.get('/', (req, res) => {
-  res.send('Hello World');
-});
+app.get('/', (req, res)=>{
+    res.send('Hello World')
+})
 
-app.use("/users", userRoutes);
-app.use("/captains", captainRoutes);
+app.use("/users",userRoutes)
+app.use("/captains",captainRoutes);
 app.use("/maps", mapRoutes);
-app.use('/rides', rideRoutes);
+app.use('/rides', rideRoutes)
 
-module.exports = app;
+module.exports = app
