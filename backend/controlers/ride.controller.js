@@ -16,7 +16,7 @@ module.exports.createRide = async(req, res)=>{
 
     res.status(201).json(ride)
 
-    const captainsInRadius = await mapService.getCaptainsInTheRadius(pickupCoordinates.ltd, pickupCoordinates.lng, 4);
+    const captainsInRadius = await mapService.getCaptainsInTheRadius(pickupCoordinates.ltd, pickupCoordinates.lng, 40);
     console.log(captainsInRadius)
     ride.otp = ""
 
