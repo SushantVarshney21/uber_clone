@@ -14,13 +14,11 @@ const rideRoutes = require('./routes/ride.routes')
 connectToDb()
 
 const corsOptions = {
-    origin: [
-        "https://uber-clone-frontend-nine.vercel.app/", // Production Frontend
-        "http://localhost:3000", // Local Development
-    ],
+    origin: "*", // Frontend URL
     credentials: true, // Allow cookies and headers for authentication
-};
-app.use(cors(corsOptions));
+  };
+
+  app.use(cors(corsOptions));
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(cookieParser())
