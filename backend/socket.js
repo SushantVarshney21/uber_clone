@@ -5,12 +5,13 @@ const captainModel = require('./models/captain.model');
 let io;
 
 function initializeSocket(server) {
-    io = socketIo(server, {
+    const io = require("socket.io")(server, {
         cors: {
-            origin: '*',
-            methods: [ 'GET', 'POST' ]
-        }
-    });
+          origin: "https://uber-clone-frontend-nine.vercel.app/",
+          methods: ["GET", "POST"],
+          credentials: true,
+        },
+      });
 
     io.on('connection', (socket) => {
         console.log(`Client connected: ${socket.id}`);
