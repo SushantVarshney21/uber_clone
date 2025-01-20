@@ -55,6 +55,8 @@ useEffect(() => {
 
 
 const updateLocation = () => {
+
+
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -70,6 +72,9 @@ const updateLocation = () => {
         console.error("Error fetching location:", error.message);
       }
     );
+    
+  console.log(captain.location)
+  console.log(captain._id)
     console.log(captain.location)
   } else {
     console.warn("Geolocation is not supported by this browser.");

@@ -80,7 +80,7 @@ module.exports.getSuggestions = async(input)=>{
 
 module.exports.getCaptainsInTheRadius = async (ltd, lng, radius) => {
 
-  // radius in km
+  // radius in km 
 
 
   const captains = await captainModel.find({
