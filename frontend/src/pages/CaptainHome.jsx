@@ -66,7 +66,7 @@ useEffect(() => {
               })
           })
 
-          console.log(captain.location)
+          // console.log(captain.location)
       }
   }
 
