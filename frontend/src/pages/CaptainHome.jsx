@@ -60,10 +60,14 @@ const updateLocation = () => {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
+
+        console.log(position.coords.latitude)
+        console.log(position.coords.longitude)
+
         socket.emit('update-location-captain', {
           userId: captain._id,
           location: {
-            lat: position.coords.latitude, // Changed "ltd" to "lat" for better convention
+            ltd: position.coords.latitude, // Changed "ltd" to "lat" for better convention
             lng: position.coords.longitude,
           },
         });
@@ -73,9 +77,9 @@ const updateLocation = () => {
       }
     );
     
-  console.log(captain.location)
-  console.log(captain._id)
-    console.log(captain.location)
+  // console.log(captain.location)
+  // console.log(captain._id)
+    // console.log(captain.location)
   } else {
     console.warn("Geolocation is not supported by this browser.");
   }
