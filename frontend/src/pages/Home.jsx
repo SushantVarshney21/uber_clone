@@ -293,7 +293,7 @@ console.log(response.data)
       
     </div>
 
-    <div ref={vehicleFoundRef} className="fixed bottom-0 z-10 px-3  bg-white w-full translate-y-full" >
+    <div ref={vehicleFoundRef} className="fixed bottom-0 z-8 px-3  bg-white w-full translate-y-full" >
       <LookingForDriver 
       setVehicleFound={setVehicleFound}
       vehicleType={vehicleType}
