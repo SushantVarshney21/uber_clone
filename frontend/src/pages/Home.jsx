@@ -277,11 +277,11 @@ console.log(response.data)
 
     </div>
 
-    <div ref={vehiclePanelRef} className="fixed bottom-0 z-10 px-3 py-10 pt-12 bg-white w-full translate-y-full" >
+    <div ref={vehiclePanelRef} className="fixed bottom-0 z-10 px-3 bg-white w-full translate-y-full" >
      <VehiclePanel setVehicleType={setVehicleType} fare={fare} setConfirmRidePanel={setConfirmRidePanel} setVehiclePanel={setVehiclePanel}/>
     </div>
 
-    <div ref={confirmRidePanelRef} className="fixed bottom-0 z-10 px-3  pt-12 bg-white w-full translate-y-full" >
+    <div ref={confirmRidePanelRef} className="fixed bottom-0 z-10 px-3   bg-white w-full translate-y-full" >
       <ConfirmRide setConfirmRidePanel={setConfirmRidePanel} 
       setVehicleFound={setVehicleFound}
       fare={fare}
@@ -293,7 +293,7 @@ console.log(response.data)
       
     </div>
 
-    <div ref={vehicleFoundRef} className="fixed bottom-0 z-10 px-3 py-6 pt-12 bg-white w-full translate-y-full" >
+    <div ref={vehicleFoundRef} className="fixed bottom-0 z-10 px-3  bg-white w-full translate-y-full" >
       <LookingForDriver 
       setVehicleFound={setVehicleFound}
       vehicleType={vehicleType}
@@ -303,7 +303,7 @@ console.log(response.data)
       />
     </div>
 
-    <div ref={waitingForDriverRef} className="fixed bottom-0 z-10 px-3 py-6 pt-12 bg-white w-full translate-y-full" >
+    <div ref={waitingForDriverRef} className="fixed bottom-0 z-10 px-3 bg-white w-full translate-y-full" >
       <WaitingForDriver ride={ride} setWaitingForDriver={setWaitingForDriver}/>
     </div>
 

@@ -38,13 +38,15 @@ function initializeSocket(server) {
             await captainModel.findByIdAndUpdate(
                 userId,
                 {
-                    $set: {
-                        'location.ltd': location.ltd,
-                        'location.lng': location.lng
-                    }
+                  $set: {
+                    location: {
+                      type: 'Point',
+                      coordinates: [location.lng, location.ltd], // MongoDB expects [longitude, latitude]
+                    },
+                  },
                 },
-                { new: true } // To return the updated document
-            );
+                { new: true, runValidators: true } // Return the updated document
+              );
         });
 
         socket.on('disconnect', () => {
