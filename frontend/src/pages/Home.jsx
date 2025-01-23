@@ -100,7 +100,7 @@ const handleDestinationChange = async (e) => {
   useGSAP(function(){
     if(openPanel){
       gsap.to(panelRef.current, {
-        height: '70%',
+        height: '100%',
         duration: 0.5,
         padding: 24
       })
@@ -140,11 +140,13 @@ const handleDestinationChange = async (e) => {
     if(confirmRidePanel){
       gsap.to(confirmRidePanelRef.current, {
         transform: 'translateY(0)',
+        opacity:1,
         duration: 0.5,
       })
     }else{
       gsap.to(confirmRidePanelRef.current, {
         transform: 'translateY(100%)',
+        opacity:0,
         duration: 0.5,
       })
     }
@@ -154,11 +156,13 @@ const handleDestinationChange = async (e) => {
     if(vehicleFound){
       gsap.to(vehicleFoundRef.current, {
         transform: 'translateY(0)',
+        opacity:1,
         duration: 0.5,
       })
     }else{
       gsap.to(vehicleFoundRef.current, {
         transform: 'translateY(100%)',
+        opacity:0,
         duration: 0.5,
       })
     }
@@ -225,15 +229,15 @@ console.log(response.data)
       {/* <LiveTracking/> */}
     </div>
     
-    <div className="flex flex-col justify-end absolute bottom-0  h-screen">
-      <div className="bg-white p-5 h-[30%] relative">
+    <div className="flex flex-col justify-end absolute bottom-0  h-screen w-full">
+      <div className="bg-white p-5 py-3  relative ">
         <h5 ref={panelCloseRef} className="absolute top-5 right-5 text-2xl opacity-0" onClick={()=>{setOpenPanel(false)}}>
         <i className="ri-arrow-down-wide-line"></i>
         </h5>
       <h4 className="text-2xl font-semibold">Find a trip</h4>
 
       <form onSubmit={(e)=>{submitHandler(e)}} >
-        <div className="absolute bg-gray-900 w-1 h-16 top-[43%] left-8 "></div>
+        <div className="absolute bg-gray-900 w-1 h-16 top-[80px] left-8 "></div>
         <input 
         className="bg-gray-100  w-full px-10 py-2 text-base mt-5" 
         type="text"
@@ -260,7 +264,7 @@ console.log(response.data)
 
       <button
                         onClick={findTrip}
-                        className='bg-black text-white px-4 py-2 rounded-lg mt-3 w-full'>
+                        className='bg-black text-white px-4 py-3 rounded-lg mt-3 w-full text-xl font-semibold'>
                         Find Trip
                     </button>
 
@@ -277,11 +281,11 @@ console.log(response.data)
 
     </div>
 
-    <div ref={vehiclePanelRef} className="fixed bottom-0 z-10 px- py-18 bg-white w-full translate-y-full" >
+    <div ref={vehiclePanelRef} className="fixed bottom-0 z-10 px- py-20 bg-white w-full translate-y-full" >
      <VehiclePanel setVehicleType={setVehicleType} fare={fare} setConfirmRidePanel={setConfirmRidePanel} setVehiclePanel={setVehiclePanel}/>
     </div>
 
-    <div ref={confirmRidePanelRef} className="fixed bottom-0 z-10 px-3 py-18  bg-white w-full translate-y-full" >
+    <div ref={confirmRidePanelRef} className="fixed bottom-0 z-10 px-3 py-20  bg-white w-full translate-y-full opacity-0" >
       <ConfirmRide setConfirmRidePanel={setConfirmRidePanel} 
       setVehicleFound={setVehicleFound}
       fare={fare}
@@ -293,7 +297,7 @@ console.log(response.data)
       
     </div>
 
-    <div ref={vehicleFoundRef} className="fixed bottom-0 z-10 px-3 py-18 bg-white w-full translate-y-full" >
+    <div ref={vehicleFoundRef} className="fixed bottom-0 z-10 px-3 py-20 bg-white w-full translate-y-full opacity-0" >
       <LookingForDriver 
       setVehicleFound={setVehicleFound}
       vehicleType={vehicleType}
@@ -303,7 +307,7 @@ console.log(response.data)
       />
     </div>
 
-    <div ref={waitingForDriverRef} className="fixed bottom-0 z-10 px-3 py-18 bg-white w-full translate-y-full" >
+    <div ref={waitingForDriverRef} className="fixed bottom-0 z-10 px-3 py-20 bg-white w-full translate-y-full" >
       <WaitingForDriver ride={ride} setWaitingForDriver={setWaitingForDriver}/>
     </div>
 
