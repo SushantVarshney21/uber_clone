@@ -64,11 +64,12 @@ const updateLocation = () => {
         socket.emit('update-location-captain', {
           userId: captain._id,
           location: {
-            ltd: position.coords.latitude, // Changed "ltd" to "lat" for better convention
+            ltd: position.coords.latitude,
             lng: position.coords.longitude,
           },
         });
       },
+      
       (error) => {
         console.error("Error fetching location:", error.message);
       }
